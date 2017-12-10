@@ -1,0 +1,54 @@
+Jazz Jackrabbit 2 - J2S Language file specification
+----------------------------------------------------
+Data types:
+    UI32 - unsigned integer, 4 bytes little endian
+    UI16 - unsigned integer, 2 bytes little endian
+    UI8 - unsigned byte
+
+J2S file structure:
+ UI32 numTexts                ... number of texts in main section
+ UI32 numTextBytes            ... number of bytes these texts occupy
+                                 (size of following texts section)
+ string[numTexts] texts       ...  null terminated strings (x numTexts)
+ UI32[numTexts] stringOffsets ... offsets to each string (x numTexts). 
+                                  Offset starts at the end of numTextBytes field
+ UI32 numLevels               ... number of level entries
+ LevelEntry[numLevels]        ... level entry array - see below
+ UI32 numHelpStringBytes      ... number of following bytes of all HelpString entries
+ HelpStringEntry[]            ... helpstring entries of levels
+
+ LevelEntry:
+    UI8[8] levelName    ... 8 bytes with null terminated name of level, uppercase
+    UI8 zero            ... probably lowest textID, but always zero in lang files
+    UI8 maxTextID       ... highest textID of this level
+    UI16 levelOffset    ... offset starting at the end of numHelpStringBytes field
+                            to fist HelpStringEntry which belongs to this level
+ 
+ HelpStringEntry:
+    UI8 textID          ... textID of this helpstring in this level
+    UI8 textLength      ... number of bytes of following string (its length)
+    string helpstring   ... text of the help string (NOT null terminated)
+ 
+
+Special characters in strings:
+    @ - makes new line in helpstring
+    # - makes following text colored (each text character has different color)
+    ż followed by number 1 to 9 
+         - makes following text more shrinked (reduces letter spacing)
+         - ż has byte value of 0xa7
+         - it can be used also as regular character without the number
+         - in Italian and Polish J2S files, ' (0x27) + number  is used instead,
+           but it's not working in the game - game displays only the number
+           instead of shrinking
+           ( Try selecting Polish language and go to Options - Controls 
+            [Opcje -Sterowanie] - on the top you se "2Klawiatura 1" )
+           I guess this is some encoding bug while editing original files.
+
+
+            
+
+
+
+
+
+ 
