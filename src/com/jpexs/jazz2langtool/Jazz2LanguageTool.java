@@ -23,7 +23,7 @@ public class Jazz2LanguageTool {
     public static void printUsage() {
         System.out.println("Usage:");
         System.out.println("java -jar jazz2langtool.jar export english.j2s english.txt");
-        System.out.println("java -jar jazz2langtool.jar import mylang.txt mylang.j2s");
+        System.out.println("java -jar jazz2langtool.jar import mylang.txt english.j2s");
     }
 
     /**
